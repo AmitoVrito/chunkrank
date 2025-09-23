@@ -1,0 +1,16 @@
+[project]
+name = "smart-chunks"
+version = "0.1.0"
+description = "Model-Aware Chunking + Answer Ranking"
+authors = [
+    {name = "NautiyalAmit",email = "de.amit.nautiyal@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
