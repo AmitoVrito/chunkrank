@@ -1,5 +1,5 @@
 [project]
-name = "smart-chunks"
+name = "chunkrank"
 version = "0.1.0"
 description = "Model-Aware Chunking + Answer Ranking"
 authors = [
