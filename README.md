@@ -73,3 +73,10 @@ A standalone Python library that:
 4. Package and release to PyPI with a simple API.  
 
 ---
+
+## Community
+
+- [Contributors](CONTRIBUTORS.md)
+- [Maintainers](MAINTAINERS.md)
+- [Contributing Guidelines](CONTRIBUTING.md)
+
