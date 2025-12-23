@@ -1,93 +1,75 @@
-# smart-chunks
+# ChunkRank: Model-Aware Chunking + Answer Ranking
 
+## Problem
+When using LLMs, text often exceeds the model’s context window.  
+To handle this, text must be **chunked** into pieces that fit the model’s maximum token length.  
 
+Two challenges arise:
+1. **Model-aware chunking**  
+   Each model (OpenAI, Anthropic, Llama, Gemini, t5, Bert, BigBert, LangBert etc.) has a different context length and tokenizer.  
+   Current libraries require users to manually configure chunk sizes; no unified library automatically adapts to the chosen model.
 
-## Getting started
+2. **Answer consolidation & ranking**  
+   Once text is chunked, a query may return multiple answers from different chunks.  
+   A **ranking step** is needed to decide the best, most relevant answer.  
+   Existing solutions (e.g., RAG frameworks) combine retrieval + generation, but there’s no standalone library that couples **chunking** and **answer re-ranking**.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+---
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Existing Libraries & Gaps
 
-## Add your files
+### Chunking
+- **LangChain Text Splitters** → Token-based, works with `tiktoken`, but requires manual chunk size config.  
+- **LlamaIndex `TokenTextSplitter`** → Similar functionality, manual sizing.  
+- **Haystack `PreProcessor`** → Can split by tokens, overlap supported, but not model-aware by default.  
+- **semantic-text-splitter / semchunk** → Standalone, supports tiktoken/HF tokenizers, still needs user-specified chunk length.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+**Gap:** None of these libraries automatically map a model → tokenizer → context window → chunk size.
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/lumorix/smart-chunks.git
-git branch -M main
-git push -uf origin main
-```
+---
 
-## Integrate with your tools
+### Ranking
+- **pygaggle** (Waterloo CAST) → neural re-ranker.  
+- **Tevatron** → dense retrieval + re-ranking toolkit.  
+- **Pyserini** (with pygaggle) → BM25 + neural re-rankers.  
+- **Haystack, LlamaIndex** → include ranking in RAG pipelines.  
 
-- [ ] [Set up project integrations](https://gitlab.com/lumorix/smart-chunks/-/settings/integrations)
+**Gap:** Ranking exists, but **not combined with chunking** in a single, simple package.
 
-## Collaborate with your team
+---
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+## What We Want to Build
+A standalone Python library that:
 
-## Test and Deploy
+1. **Model-Aware Chunking**
+   - User specifies a model name (e.g., `gpt-4o-mini`, `claude-3.5-sonnet`, `Llama-3.1-8B`).
+   - Library looks up the model’s max context window and tokenizer.
+   - Automatically chunks text into model-compatible pieces with optional overlap and reserve space.
 
-Use the built-in continuous integration in GitLab.
+2. **Answer Consolidation & Ranking**
+   - Given multiple answers from chunks, apply a re-ranking step to select the best one.
+   - Should integrate with existing ranking models (cross-encoder, bi-encoder, BM25 + re-ranker).
+   - Should work standalone, without needing a full RAG pipeline.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+3. **Unified Workflow**
+   - `chunks = chunkrank.split(text, model="gpt-4o-mini")`
+   - `answers = chunkrank.answer(question, chunks)`
+   - `best = chunkrank.rank(answers)`
 
-***
+---
 
-# Editing this README
+## Vision
+- Lightweight, model-agnostic utility library.  
+- Bridges the gap between **text preparation** (chunking) and **answer quality** (ranking).  
+- Complements existing RAG frameworks but can also work independently.  
+- Easy to drop into pipelines: preprocessing for QA, summarization, or information extraction.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+---
 
-## Suggestions for a good README
+## Next Steps
+1. Build the **model registry** (model → context window + tokenizer).  
+2. Implement **chunking strategies** (tokens, sentences, paragraphs).  
+3. Integrate a **re-ranking engine** (start with Hugging Face cross-encoder).  
+4. Package and release to PyPI with a simple API.  
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+---
