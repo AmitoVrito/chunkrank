@@ -1,0 +1,22 @@
+
+from dataclasses import dataclass
+
+@dataclass
+class ChunkerConfig:
+    model: str
+    strategy: Strategy = "tokens"
+    overlap_tokens: int = 0
+    reserve_tokens: int = None
+
+class Chunker:
+    def __init__(self, config: ChunkerConfig):
+        info = get_model_info(config.model)
+        self.window = info.max_context - (config.reserve_tokens or info.default_reserve)
+        self.overlap = config.overlap_tokens
+        self.strategy = config.strategy
+        self.tok = build_tokenizer(info.tokenizer, info.tokenizer_id)
+
+    def split(self):
+        ...
+    def decode(self):
+        ...

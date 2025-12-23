@@ -1,0 +1,149 @@
+{
+  "gpt-4o-mini": {
+    "name": "gpt-4o-mini",
+    "max_context": 128000,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 512
+  },
+  "claude-3-5-sonnet": {
+    "name": "claude-3-5-sonnet",
+    "max_context": 200000,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 512
+  },
+  "Llama-3.1-8B": {
+    "name": "Llama-3.1-8B",
+    "max_context": 128000,
+    "tokenizer": "hf",
+    "tokenizer_id": "meta-llama/Llama-3.1-8B",
+    "default_reserve": 512
+  },
+  "Llama-3.1-70B": {
+    "name": "Llama-3.1-70B",
+    "max_context": 128000,
+    "tokenizer": "hf",
+    "tokenizer_id": "meta-llama/Llama-3.1-70B",
+    "default_reserve": 1024
+  },
+  "mistral-7b": {
+    "name": "Mistral-7B",
+    "max_context": 32768,
+    "tokenizer": "hf",
+    "tokenizer_id": "mistralai/Mistral-7B-v0.2",
+    "default_reserve": 512
+  },
+  "mixtral-8x7b": {
+    "name": "Mixtral-8x7B",
+    "max_context": 65536,
+    "tokenizer": "hf",
+    "tokenizer_id": "mistralai/Mixtral-8x7B-Instruct",
+    "default_reserve": 1024
+  },
+  "gpt-neo-2.7B": {
+    "name": "GPT-Neo-2.7B",
+    "max_context": 2048,
+    "tokenizer": "hf",
+    "tokenizer_id": "EleutherAI/gpt-neo-2.7B",
+    "default_reserve": 128
+  },
+  "gpt-j-6B": {
+    "name": "GPT-J-6B",
+    "max_context": 4096,
+    "tokenizer": "hf",
+    "tokenizer_id": "EleutherAI/gpt-j-6B",
+    "default_reserve": 256
+  },
+  "bert-base-uncased": {
+    "name": "BERT Base Uncased",
+    "max_context": 512,
+    "tokenizer": "hf",
+    "tokenizer_id": "bert-base-uncased",
+    "default_reserve": 64
+  },
+  "bert-large-uncased": {
+    "name": "BERT Large Uncased",
+    "max_context": 512,
+    "tokenizer": "hf",
+    "tokenizer_id": "bert-large-uncased",
+    "default_reserve": 64
+  },
+  "distilbert-base-uncased": {
+    "name": "DistilBERT Base Uncased",
+    "max_context": 512,
+    "tokenizer": "hf",
+    "tokenizer_id": "distilbert-base-uncased",
+    "default_reserve": 64
+  },
+  "bigbird-roberta-base": {
+    "name": "BigBird RoBERTa Base",
+    "max_context": 4096,
+    "tokenizer": "hf",
+    "tokenizer_id": "google/bigbird-roberta-base",
+    "default_reserve": 256
+  },
+  "bigbird-roberta-large": {
+    "name": "BigBird RoBERTa Large",
+    "max_context": 4096,
+    "tokenizer": "hf",
+    "tokenizer_id": "google/bigbird-roberta-large",
+    "default_reserve": 256
+  },
+  "longformer-base-4096": {
+    "name": "Longformer Base 4096",
+    "max_context": 4096,
+    "tokenizer": "hf",
+    "tokenizer_id": "allenai/longformer-base-4096",
+    "default_reserve": 256
+  },
+  "longformer-large-4096": {
+    "name": "Longformer Large 4096",
+    "max_context": 4096,
+    "tokenizer": "hf",
+    "tokenizer_id": "allenai/longformer-large-4096",
+    "default_reserve": 256
+  },
+  "deberta-v3-base": {
+    "name": "DeBERTa v3 Base",
+    "max_context": 512,
+    "tokenizer": "hf",
+    "tokenizer_id": "microsoft/deberta-v3-base",
+    "default_reserve": 64
+  },
+  "deberta-v3-large": {
+    "name": "DeBERTa v3 Large",
+    "max_context": 512,
+    "tokenizer": "hf",
+    "tokenizer_id": "microsoft/deberta-v3-large",
+    "default_reserve": 64
+  },
+  "t5-base": {
+    "name": "T5 Base",
+    "max_context": 512,
+    "tokenizer": "hf",
+    "tokenizer_id": "t5-base",
+    "default_reserve": 64
+  },
+  "t5-large": {
+    "name": "T5 Large",
+    "max_context": 512,
+    "tokenizer": "hf",
+    "tokenizer_id": "t5-large",
+    "default_reserve": 64
+  },
+  "flan-t5-xl": {
+    "name": "FLAN-T5 XL",
+    "max_context": 2048,
+    "tokenizer": "hf",
+    "tokenizer_id": "google/flan-t5-xl",
+    "default_reserve": 128
+  },
+  "gemini-pro-placeholder": {
+    "name": "Gemini Pro",
+    "max_context": 128000,
+    "tokenizer": "sentencepiece",
+    "tokenizer_id": "google/gemini",
+    "default_reserve": 512
+  }
+}
