@@ -3,11 +3,14 @@ name = "chunkrank"
 version = "0.1.0"
 description = "Model-Aware Chunking + Answer Ranking"
 authors = [
-    {name = "NautiyalAmit",email = "de.amit.nautiyal@gmail.com"}
+    {name = "Your Name",email = "you@example.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.14,<4.0"
 dependencies = [
+    "mypy (>=1.19.1,<2.0.0)",
+    "deptry (>=0.24.0,<0.25.0)",
+    "ruff (>=0.14.10,<0.15.0)"
 ]
 
 
