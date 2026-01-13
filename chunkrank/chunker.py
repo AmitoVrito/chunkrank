@@ -26,4 +26,7 @@ class Chunker:
         ...
 
     def decode(self):
-        ...
+        def _decode(self, token_ids: List[int]) -> str:
+            if hasattr(self.tok, "decode"):
+                return self.tok.decode(token_ids)
+            return f"[Chunk {len(token_ids)} tokens]"
