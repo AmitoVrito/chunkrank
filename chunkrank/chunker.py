@@ -22,8 +22,14 @@ class Chunker:
         self.strategy = config.strategy
         self.tok = build_tokenizer(info.tokenizer, info.tokenizer_id)
 
-    def split(self):
-        ...
+    def split(self, text: str) -> List[str]:
+        tokens = self.tok.encode(text)
+        chunks, step = [], self.window - self.overlap
+        for i in range(0, len(tokens), step):
+            chunk_ids = tokens[i : i + self.window]
+            chunks.append(self._decode(chunk_ids))
+        return chunks
+
 
     def decode(self):
         def _decode(self, token_ids: List[int]) -> str:
