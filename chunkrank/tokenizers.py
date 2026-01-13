@@ -27,12 +27,12 @@ class TokenizerAdapter:
 
 def build_tokenizer(backend: Optional[str], tokenizer_id: Optional[str]) -> TokenizerAdapter:
     if backend == "tiktoken":
-        tiktoken = _try_import_tiktoken()
+        tiktoken = _try_importing_tiktoken()
         if tiktoken:
             enc = tiktoken.get_encoding(tokenizer_id or "o200k_base")
             return TokenizerAdapter(lambda s: enc.encode(s, disallowed_special=()))
     elif backend == "hf":
-        transformers = _try_import_transformers()
+        transformers = _try_importing_transformers()
         if transformers:
             tok = transformers.AutoTokenizer.from_pretrained(tokenizer_id, use_fast=True)
             return TokenizerAdapter(lambda s: tok.encode(s, add_special_tokens=False))

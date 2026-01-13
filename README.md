@@ -1,4 +1,5 @@
 # ChunkRank: Model-Aware Chunking + Answer Ranking
+Available at : https://pypi.org/project/chunkrank/
 
 ## Problem
 When using LLMs, text often exceeds the model’s context window.  
@@ -80,3 +81,32 @@ A standalone Python library that:
 - [Maintainers](MAINTAINERS.md)
 - [Contributing Guidelines](CONTRIBUTING.md)
 
+---
+
+
+## Installation
+
+```bash
+pip install chunkrank
+```
+or for development:
+```bash
+poetry install
+
+```
+## Usage
+
+``` python
+from chunkrank import ChunkRankPipeline
+
+text = "..."  # Some long document
+pipe = ChunkRankPipeline(model="gpt-4o-mini")
+answer = pipe.process("What is the topic?", text)
+```
+
+## Features
+
+- Automatic model-aware chunking (context-size, tokenizer)
+- Sentence/paragraph strategies
+- Answer re-ranking via cross-encoder
+- Works standalone or with RAG pipelines

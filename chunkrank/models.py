@@ -7,7 +7,7 @@ from typing import Optional
 @dataclass
 class ModelInfo:
     name: str
-    max_content: int
+    max_context: int
     tokenizer: Optional[str]
     tokenizer_id: Optional[str]
     default_reserve: int = 256
@@ -15,7 +15,7 @@ class ModelInfo:
 
 def load_registry() -> Dict[str, ModelInfo]:
     "Loads the model registry from the json file"
-    with importlib.resources.open_text("chunkrank.registry", "registry.json") as file:
+    with importlib.resources.open_text("chunkrank.registry", "model_registry.json") as file:
         data = json.load(file)
         return {k: ModelInfo(**v) for k, v in data.items()}
 
