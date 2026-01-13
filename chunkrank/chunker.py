@@ -1,5 +1,10 @@
-
 from dataclasses import dataclass
+from typing import List, Literal
+from .models import get_model_info
+from .tokenizers import build_tokenizer
+
+Strategy = Literal["tokens", "sentences", "paragraphs"]
+
 
 @dataclass
 class ChunkerConfig:
@@ -7,6 +12,7 @@ class ChunkerConfig:
     strategy: Strategy = "tokens"
     overlap_tokens: int = 0
     reserve_tokens: int = None
+
 
 class Chunker:
     def __init__(self, config: ChunkerConfig):
@@ -18,5 +24,6 @@ class Chunker:
 
     def split(self):
         ...
+
     def decode(self):
         ...
