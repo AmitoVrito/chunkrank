@@ -26,12 +26,11 @@ class Chunker:
         tokens = self.tok.encode(text)
         chunks, step = [], self.window - self.overlap
         for i in range(0, len(tokens), step):
-            chunk_ids = tokens[i : i + self.window]
+            chunk_ids = tokens[i: i + self.window]
             chunks.append(self._decode(chunk_ids))
         return chunks
 
-
-    def decode(self):
+    def _decode(self, token_ids: List[int]) -> str:
         def _decode(self, token_ids: List[int]) -> str:
             if hasattr(self.tok, "decode"):
                 return self.tok.decode(token_ids)

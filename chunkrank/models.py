@@ -13,14 +13,14 @@ class ModelInfo:
     default_reserve: int = 256
 
 
-def load_registry():
+def load_registry() -> Dict[str, ModelInfo]:
     "Loads the model registry from the json file"
     with importlib.resources.open_text("chunkrank.registry", "registry.json") as file:
         data = json.load(file)
         return {k: ModelInfo(**v) for k, v in data.items()}
 
 
-def get_model_info(model):
+def get_model_info(model: str) -> ModelInfo:
     registry = load_registry()
     if model in registry:
         return registry[model]
