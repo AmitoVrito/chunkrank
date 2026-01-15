@@ -3,7 +3,7 @@ name = "chunkrank"
 version = "0.2.3"
 description = "Model-aware text chunking and answer re-ranking for LLM pipelines. Automatically adapts chunk size to tokenizer and context window, then consolidates and ranks answers across chunks."
 authors = [
-    { name = "Your Name", email = "you@example.com" }
+    { name = "Amit Nautiyal", email = "de.amit.nautiyal@gmail.com" }
 ]
 readme = "README.md"
 homepage = "https://gitlab.com/gaafa/smart-chunks"
