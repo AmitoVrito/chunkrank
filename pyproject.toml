@@ -1,6 +1,6 @@
 [project]
 name = "chunkrank"
-version = "0.2.1"
+version = "0.2.2"
 description = "Model-aware text chunking and answer re-ranking for LLM pipelines. Automatically adapts chunk size to tokenizer and context window, then consolidates and ranks answers across chunks."
 authors = [
     { name = "Your Name", email = "you@example.com" }

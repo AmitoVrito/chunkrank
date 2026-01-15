@@ -41,7 +41,7 @@ No manual token math. No trial-and-error.
 - Multiple candidate answers are produced
 - ChunkRank **re-ranks** them to return the best answer
 Works standalone — no full RAG stack required.
-- 
+
 ---
 
 ## Installation
@@ -117,6 +117,5 @@ best_answer = chunkrank.rank(answers)
 
 - [Contributors](CONTRIBUTORS.md)
 - [Maintainers](MAINTAINERS.md)
-- [Contributing Guidelines](CONTRIBUTING.md)
 
 ---
