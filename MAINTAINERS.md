@@ -17,7 +17,7 @@ Names are listed alphabetically.
 
 ## Contributors
 
-- **Aayush Bhatt**  
+- **Ayush Bhatt**  
   Contributions: Implementation, developer, Documentation improvements, TDD
 
 - **Gaurav Nautiyal**  
