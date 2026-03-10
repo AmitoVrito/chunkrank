@@ -7,8 +7,8 @@ Thank you for your interest in contributing!
 ## Getting Started
 
 ```bash
-git clone https://gitlab.com/lumorix/smart-chunks.git
-cd smart-chunks
+git clone https://github.com/AmitoVrito/chunkrank.git
+cd chunkrank
 poetry install
 ```
 
@@ -19,7 +19,7 @@ poetry install
 1. Fork the repo and create a branch from `main`
 2. Make your changes
 3. Run tests before submitting
-4. Open a merge request with a clear description of what and why
+4. Open a pull request with a clear description of what and why
 
 ---
 
@@ -50,13 +50,13 @@ poetry run mypy chunkrank/
 
 - Keep commits focused and atomic
 - Write clear commit messages
-- Reference any related issues in your MR description
+- Reference any related issues in your PR description
 
 ---
 
 ## Reporting Issues
 
-Open an issue on GitLab: https://gitlab.com/lumorix/smart-chunks/-/issues
+Open an issue on GitHub: https://github.com/AmitoVrito/chunkrank/issues
 
 Please include:
 - What you expected to happen
@@ -67,4 +67,4 @@ Please include:
 
 ## Getting Listed as a Contributor
 
-After your MR is merged, open a follow-up MR adding your name to [CONTRIBUTORS.md](CONTRIBUTORS.md).
+After your PR is merged, open a follow-up PR adding your name to [CONTRIBUTORS.md](CONTRIBUTORS.md).

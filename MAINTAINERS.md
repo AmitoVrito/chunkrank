@@ -8,10 +8,8 @@ This file lists the current maintainers of ChunkRank.
 
 - **Amit**
   Role: Lead maintainer
-  
-- Contact: amit.nautiyal@engineerofai.com
-  
-- Responsibilities: Architecture, releases, code review, roadmap
+  GitHub: [@AmitoVrito](https://github.com/AmitoVrito)
+  Responsibilities: Architecture, releases, code review, roadmap
 
 ---
 
