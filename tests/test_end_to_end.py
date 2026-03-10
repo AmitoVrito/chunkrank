@@ -16,6 +16,6 @@ def test_rank_chunks_then_answer():
     top_chunk, _ = ranker.rank_texts(question, chunks)[0]
 
     answerer = LocalExtractiveAnswerer(min_overlap=1)
-    answer = answerer.answer(question, top_chunk)
+    answer, score = answerer.answer(question, top_chunk)
 
     assert "ranking" in answer.lower() or answer != ""
