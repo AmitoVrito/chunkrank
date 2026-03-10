@@ -56,32 +56,62 @@ poetry install
 ```
 ## Quick Example
 
-``` python
-from chunkrank import ChunkRankPipeline
+```python
+import chunkrank
 
 text = open("document.txt").read()
+question = "What is the main topic of this document?"
 
-pipe = ChunkRankPipeline(model="gpt-4o-mini")
+chunks = chunkrank.split(text, model="gpt-4o-mini")
+answers = chunkrank.answer(question, chunks)
+best = chunkrank.rank(answers)
 
-answer = pipe.process(
-    question="What is the main topic of this document?",
-    text=text
-)
-
-print(answer)
+print(best)
 ```
----
 
+---
 
 ## Core API
 
-``` python
+```python
+import chunkrank
+
+# 1. Split text into model-aware chunks
 chunks = chunkrank.split(text, model="gpt-4o-mini")
 
+# 2. Answer the question across all chunks
+#    Default: local extractive (no API key required)
 answers = chunkrank.answer(question, chunks)
 
+#    With OpenAI:
+answers = chunkrank.answer(question, chunks, provider="openai", api_key="sk-...")
+
+#    With Anthropic:
+answers = chunkrank.answer(question, chunks, provider="anthropic", api_key="sk-ant-...")
+
+# 3. Rank and return the best answer
 best_answer = chunkrank.rank(answers)
 ```
+
+---
+
+## Pipeline API
+
+```python
+from chunkrank import ChunkRankPipeline
+
+# Local (no LLM)
+pipe = ChunkRankPipeline(model="gpt-4o-mini")
+
+# With OpenAI
+pipe = ChunkRankPipeline(model="gpt-4o-mini", provider="openai", api_key="sk-...")
+
+# With Anthropic
+pipe = ChunkRankPipeline(model="gpt-4o-mini", provider="anthropic", api_key="sk-ant-...")
+
+answer = pipe.process(question="What is the main topic?", text=text)
+```
+
 ---
 
 
