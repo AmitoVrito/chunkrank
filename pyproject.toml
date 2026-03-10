@@ -3,11 +3,11 @@ name = "chunkrank"
 version = "0.2.4"
 description = "Model-aware text chunking and answer re-ranking for LLM pipelines. Automatically adapts chunk size to tokenizer and context window, then consolidates and ranks answers across chunks."
 authors = [
-    { name = "Amit Nautiyal", email = "de.amit.nautiyal@gmail.com" }
+    { name = "Amit" }
 ]
 readme = "README.md"
-homepage = "https://gitlab.com/gaafa/smart-chunks"
-repository = "https://gitlab.com/gaafa/smart-chunks"
+homepage = "https://github.com/AmitoVrito/chunkrank"
+repository = "https://github.com/AmitoVrito/chunkrank"
 
 license = { text = "MIT" }
 requires-python = ">=3.14,<4.0"
@@ -23,10 +23,27 @@ dependencies = [
 ]
 
 [tool.poetry.urls]
-"Source Code" = "https://gitlab.com/gaafa/smart-chunks"
-"Issue Tracker" = "https://gitlab.com/gaafa/smart-chunks/-/issues"
-"Documentation" = "https://gitlab.com/gaafa/smart-chunks/-/blob/main/README.md"
+"Source Code" = "https://github.com/AmitoVrito/chunkrank"
+"Issue Tracker" = "https://github.com/AmitoVrito/chunkrank/issues"
+"Documentation" = "https://github.com/AmitoVrito/chunkrank#readme"
 
+
+[project.optional-dependencies]
+semantic = ["sentence-transformers>=2.7,<3.0"]
+openai-embed = ["openai>=1.0"]
+cohere-embed = ["cohere>=5.0"]
+all = [
+    "sentence-transformers>=2.7,<3.0",
+    "openai>=1.0",
+    "anthropic>=0.25",
+    "cohere>=5.0",
+    "tiktoken>=0.7",
+    "transformers>=4.40",
+]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.23"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
