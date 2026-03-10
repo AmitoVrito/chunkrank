@@ -1,6 +1,17 @@
-from chunkrank.chunker import Chunker, ChunkerConfig
-from chunkrank.ranker import Ranker
-from chunkrank.answerers import LocalExtractiveAnswerer
+"""
+Answer each chunk then rank — using local extractor (default) or an LLM.
+
+Local (no API key needed):
+    python example_answer_each_chunk_then_rank.py
+
+With OpenAI:
+    OPENAI_API_KEY=sk-... python example_answer_each_chunk_then_rank.py
+
+With Anthropic:
+    ANTHROPIC_API_KEY=sk-ant-... python example_answer_each_chunk_then_rank.py
+"""
+import os
+import chunkrank
 
 DOC = """
 ChunkRank aims to combine model-aware text chunking with answer ranking.
@@ -10,33 +21,23 @@ To pick the best one, you rank the answers against the question.
 BM25 often works well for ranking short answer candidates.
 """ * 30
 
-def main():
-    question = "What is model-aware chunking?"
-    model = "gpt-4o-mini"
+question = "What is model-aware chunking?"
+model = "gpt-4o-mini"
 
-    chunker = Chunker(ChunkerConfig(model=model, overlap_tokens=64))
-    chunks = chunker.split(DOC)
+chunks = chunkrank.split(model=model, text=DOC, overlap_tokens=64)
+print(f"Chunks: {len(chunks)}")
 
-    answerer = LocalExtractiveAnswerer(min_overlap=2)
-    answers = []
-    for i, ch in enumerate(chunks, 1):
-        a = answerer.answer(question, ch)
-        if a:
-            answers.append(a)
+# Detect provider from environment
+if os.getenv("OPENAI_API_KEY"):
+    answers = chunkrank.answer(question, chunks, provider="openai", api_key=os.environ["OPENAI_API_KEY"])
+elif os.getenv("ANTHROPIC_API_KEY"):
+    answers = chunkrank.answer(question, chunks, provider="anthropic", api_key=os.environ["ANTHROPIC_API_KEY"])
+else:
+    print("No API key found — using local extractive answerer.")
+    answers = chunkrank.answer(question, chunks)
 
-    if not answers:
-        print("No answers produced.")
-        return
+non_empty = [(a, s) for a, s in answers if a]
+print(f"Candidate answers: {len(non_empty)}")
 
-    ranker = Ranker(method="tfidf")
-    ranked_answers = ranker.rank(question, answers)
-
-    print(f"Chunks: {len(chunks)}")
-    print(f"Candidate answers: {len(answers)}")
-    print("Best answer:", ranked_answers[0][0])
-    print("\nTop 5:")
-    for ans, score in ranked_answers[:5]:
-        print(f"- {score:.4f}: {ans}")
-
-if __name__ == "__main__":
-    main()
+best = chunkrank.rank(answers)
+print("Best answer:", best or "[no answer found]")
