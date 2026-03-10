@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import List, Optional, Tuple
-import re
+from .utils import split_sentences, norm_words
 
 
 @dataclass
@@ -9,15 +9,15 @@ class LocalExtractiveAnswerer:
     min_overlap: int = 1
 
     def answer(self, question: str, context: str) -> Tuple[str, float]:
-        sentences = _split_sentences(context)
+        sentences = split_sentences(context)
         if not sentences:
             return ("", 0.0)
 
-        q_words = _norm_words(question)
+        q_words = norm_words(question)
         best: Tuple[str, float] = ("", 0.0)
 
         for s in sentences:
-            s_words = _norm_words(s)
+            s_words = norm_words(s)
             overlap = len(q_words.intersection(s_words))
             if overlap > best[1]:
                 best = (s.strip(), float(overlap))
@@ -94,11 +94,3 @@ class LLMAnswerer:
         return (text, 1.0)
 
 
-def _split_sentences(text: str) -> List[str]:
-    parts = re.split(r"(?<=[.!?])\s+", text.strip())
-    return [p.strip() for p in parts if p.strip()]
-
-
-def _norm_words(text: str) -> set[str]:
-    words = re.findall(r"[A-Za-z0-9']+", text.lower())
-    return set(words)
