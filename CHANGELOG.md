@@ -4,6 +4,11 @@ All notable changes to this project will be documented here.
 
 ---
 
+## [1.1.3] — 2026-04-20
+
+### Fixed
+- Fix TOML structure in pyproject.toml so PyPI correctly reads Changelog URL
+
 ## [1.1.2] — 2026-04-20
 
 ### Fixed
