@@ -9,6 +9,7 @@
   <a href="https://pypi.org/project/chunkrank/"><img src="https://img.shields.io/pypi/dm/chunkrank?color=green&label=downloads" alt="PyPI downloads"></a>
   <a href="https://pypi.org/project/chunkrank/"><img src="https://img.shields.io/pypi/pyversions/chunkrank?label=python" alt="Python versions"></a>
   <a href="https://github.com/AmitoVrito/chunkrank/blob/main/LICENCE"><img src="https://img.shields.io/badge/license-Apache%202.0-orange" alt="License"></a>
+  <a href="https://github.com/AmitoVrito/chunkrank/blob/main/CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.1.3-blue" alt="Changelog"></a>
   <a href="https://github.com/AmitoVrito/chunkrank/actions"><img src="https://img.shields.io/badge/tests-116%20passing-brightgreen" alt="Tests"></a>
 </p>
 
