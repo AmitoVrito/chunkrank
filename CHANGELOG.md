@@ -4,7 +4,7 @@ All notable changes to this project will be documented here.
 
 ---
 
-## [1.0.0] — 2026-04-20
+## [1.1.0] — 2026-04-20
 
 ### Added
 - `ChunkCache` — disk-backed JSON cache for chunked text (stdlib only, no new deps)
