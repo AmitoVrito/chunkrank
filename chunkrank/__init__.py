@@ -9,6 +9,8 @@ from .async_pipeline import AsyncChunkRankPipeline, AsyncLLMAnswerer
 from .ranker import Ranker
 from .answerers import LocalExtractiveAnswerer, LLMAnswerer
 from .embeddings import EmbeddingConfig, EmbeddingBackend
+from .cache import ChunkCache
+from .models import register_model
 
 
 # ------------------------------------------------------------------ #
@@ -120,11 +122,13 @@ __all__ = [
     "LLMAnswerer",
     "EmbeddingConfig",
     "EmbeddingBackend",
+    "ChunkCache",
     # Sync functions
     "chunk_text",
     "split",
     "answer",
     "rank",
+    "register_model",
     # Async functions
     "async_split",
     "async_answer",

@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from typing import Callable, List, Optional
+
 
 def _try_importing_tiktoken():
     try:
