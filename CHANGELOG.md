@@ -4,6 +4,15 @@ All notable changes to this project will be documented here.
 
 ---
 
+## [1.1.1] — 2026-04-20
+
+### Changed
+- Add Ayush as maintainer in MAINTAINERS.md
+- Update CONTRIBUTING.md with dev extras and Apache 2.0 note
+- Update chunkrank.md to reflect current v1.1.x state
+
+---
+
 ## [1.1.0] — 2026-04-20
 
 ### Added
