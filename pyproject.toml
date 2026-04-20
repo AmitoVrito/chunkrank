@@ -6,9 +6,6 @@ authors = [
     { name = "Amit" }
 ]
 readme = "README.md"
-homepage = "https://github.com/AmitoVrito/chunkrank"
-repository = "https://github.com/AmitoVrito/chunkrank"
-
 license = { text = "Apache-2.0" }
 requires-python = ">=3.10,<4.0"
 dependencies = [
@@ -17,12 +14,12 @@ dependencies = [
     "rank-bm25>=0.2.2"
 ]
 
-[tool.poetry.urls]
-"Source Code" = "https://github.com/AmitoVrito/chunkrank"
-"Issue Tracker" = "https://github.com/AmitoVrito/chunkrank/issues"
+[project.urls]
+"Homepage" = "https://github.com/AmitoVrito/chunkrank"
+"Repository" = "https://github.com/AmitoVrito/chunkrank"
 "Documentation" = "https://github.com/AmitoVrito/chunkrank#readme"
+"Issue Tracker" = "https://github.com/AmitoVrito/chunkrank/issues"
 "Changelog" = "https://github.com/AmitoVrito/chunkrank/blob/main/CHANGELOG.md"
-
 
 [project.optional-dependencies]
 semantic = ["sentence-transformers>=2.7"]
