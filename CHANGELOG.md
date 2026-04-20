@@ -17,6 +17,7 @@ All notable changes to this project will be documented here.
 - Expanded model registry: OpenAI o-series, Claude 3/3.5/4.x, Gemini 1.5/2.x, Llama 3.1–4, Mistral, Cohere, DeepSeek, Qwen
 
 ### Changed
+- License changed from MIT to Apache 2.0
 - `requires-python` bumped from `>=3.14` to `>=3.10`
 - `mypy`, `ruff`, `deptry` moved from runtime deps to `[dev]` optional deps
 - `regex` removed (was unused runtime dep)

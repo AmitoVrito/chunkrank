@@ -1,4 +1,18 @@
-# ChunkRank: Model-Aware Chunking + Answer Ranking
+# ChunkRank
+
+<p align="center">
+  <b>Model-aware text chunking and answer re-ranking for LLM pipelines</b>
+</p>
+
+<p align="center">
+  <a href="https://pypi.org/project/chunkrank/"><img src="https://img.shields.io/pypi/v/chunkrank?color=blue&label=PyPI" alt="PyPI version"></a>
+  <a href="https://pypi.org/project/chunkrank/"><img src="https://img.shields.io/pypi/dm/chunkrank?color=green&label=downloads" alt="PyPI downloads"></a>
+  <a href="https://pypi.org/project/chunkrank/"><img src="https://img.shields.io/pypi/pyversions/chunkrank?label=python" alt="Python versions"></a>
+  <a href="https://github.com/AmitoVrito/chunkrank/blob/main/LICENCE"><img src="https://img.shields.io/badge/license-Apache%202.0-orange" alt="License"></a>
+  <a href="https://github.com/AmitoVrito/chunkrank/actions"><img src="https://img.shields.io/badge/tests-116%20passing-brightgreen" alt="Tests"></a>
+</p>
+
+---
 
 ```
 Used internally for long-document QA and evaluation pipelines handling 1,000+ PDFs.
@@ -245,7 +259,14 @@ Unknown models fall back to 128k context with tiktoken (`o200k_base`).
 
 ---
 
+## License
+
+Apache 2.0 — see [LICENCE](LICENCE).
+
+---
+
 ## Community
 
 - [Contributors](CONTRIBUTORS.md)
 - [Changelog](CHANGELOG.md)
+- Issues: https://github.com/AmitoVrito/chunkrank/issues
