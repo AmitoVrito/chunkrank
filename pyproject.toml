@@ -1,6 +1,6 @@
 [project]
 name = "chunkrank"
-version = "1.1.1"
+version = "1.1.2"
 description = "Model-aware text chunking and answer re-ranking for LLM pipelines. Automatically adapts chunk size to tokenizer and context window, then consolidates and ranks answers across chunks."
 authors = [
     { name = "Amit" }
@@ -21,6 +21,7 @@ dependencies = [
 "Source Code" = "https://github.com/AmitoVrito/chunkrank"
 "Issue Tracker" = "https://github.com/AmitoVrito/chunkrank/issues"
 "Documentation" = "https://github.com/AmitoVrito/chunkrank#readme"
+"Changelog" = "https://github.com/AmitoVrito/chunkrank/blob/main/CHANGELOG.md"
 
 
 [project.optional-dependencies]

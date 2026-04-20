@@ -4,6 +4,13 @@ All notable changes to this project will be documented here.
 
 ---
 
+## [1.1.2] — 2026-04-20
+
+### Fixed
+- Add Changelog URL to PyPI project metadata
+
+---
+
 ## [1.1.1] — 2026-04-20
 
 ### Changed
