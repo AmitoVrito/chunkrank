@@ -18,10 +18,13 @@ class Ranker:
         self,
         method: str = "bm25",
         embedding_config: Optional["EmbeddingConfig"] = None,
+        cross_encoder_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2",
     ):
         self.method = method
         self._embedding_config = embedding_config
         self._backend = None  # lazy-init EmbeddingBackend when method="embedding"
+        self._cross_encoder = None  # lazy-init CrossEncoder when method="cross-encoder"
+        self._cross_encoder_model = cross_encoder_model
 
     def rank(self, question: str, answers: List[str]) -> List[Tuple[str, float]]:
         clean = [a for a in answers if isinstance(a, str) and a.strip()]
@@ -34,6 +37,8 @@ class Ranker:
             return self._rank_bm25(question, clean)
         elif self.method == "embedding":
             return self._rank_embedding(question, clean)
+        elif self.method == "cross-encoder":
+            return self._rank_cross_encoder(question, clean)
         else:
             raise ValueError(f"Unknown ranking method: {self.method}")
 
@@ -57,6 +62,7 @@ class Ranker:
             scores = (q_vec @ a_vecs.T)[0].tolist()
             return sorted(zip(clean, scores), key=lambda x: x[1], reverse=True)
 
+        # bm25 / tfidf / cross-encoder → thread pool
         return await asyncio.to_thread(self.rank, question, answers)
 
     def rank_texts(self, query: str, texts: List[str]) -> List[Tuple[str, float]]:
@@ -79,6 +85,22 @@ class Ranker:
         q_tokens = question.split()
         scores = bm25.get_scores(q_tokens)
         return sorted(zip(answers, scores), key=lambda x: x[1], reverse=True)
+
+    def _rank_cross_encoder(
+        self, question: str, answers: List[str]
+    ) -> List[Tuple[str, float]]:
+        if self._cross_encoder is None:
+            try:
+                from sentence_transformers import CrossEncoder
+            except ImportError:
+                raise ImportError(
+                    "sentence-transformers not installed. "
+                    "Run: pip install sentence-transformers  or  pip install chunkrank[semantic]"
+                )
+            self._cross_encoder = CrossEncoder(self._cross_encoder_model)
+        pairs = [(question, a) for a in answers]
+        scores = self._cross_encoder.predict(pairs)
+        return sorted(zip(answers, scores.tolist()), key=lambda x: x[1], reverse=True)
 
     def _rank_embedding(
         self, question: str, answers: List[str]

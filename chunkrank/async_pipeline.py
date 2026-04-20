@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import TYPE_CHECKING, List, Optional, Tuple
+from typing import TYPE_CHECKING, AsyncIterator, List, Optional, Tuple
 
 from .chunker import Chunker, ChunkerConfig
 from .ranker import Ranker
@@ -132,6 +132,20 @@ class AsyncChunkRankPipeline:
 
         ranked = await self._ranker.rank_async(question, [a for a, _ in scored])
         return ranked[0][0] if ranked else ""
+
+    async def stream(self, question: str, text: str) -> AsyncIterator[str]:
+        """Yield each chunk's answer as it is processed (progressive, unranked).
+
+        Useful for showing real-time progress without waiting for the full pipeline.
+        """
+        chunks: List[str] = await asyncio.to_thread(self._chunker.split, text)
+        for chunk in chunks:
+            if self._async_answerer is not None:
+                answer, _ = await self._async_answerer.answer(question, chunk)
+            else:
+                answer, _ = await asyncio.to_thread(self._sync_answerer.answer, question, chunk)
+            if answer:
+                yield answer
 
     async def _answer_chunks(
         self, question: str, chunks: List[str]

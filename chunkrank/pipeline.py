@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, List, Optional, Tuple
+from typing import TYPE_CHECKING, Iterator, List, Optional, Tuple
 
 from .chunker import Chunker, ChunkerConfig
 from .ranker import Ranker
@@ -57,3 +57,15 @@ class ChunkRankPipeline:
 
         ranked = self.ranker.rank(question, [a for a, _ in scored])
         return ranked[0][0] if ranked else ""
+
+    def stream(self, question: str, text: str) -> Iterator[str]:
+        """Yield each chunk's answer as it is processed (progressive, unranked).
+
+        Useful for showing real-time progress without waiting for the full pipeline.
+        The final ranked answer is still available via :meth:`process`.
+        """
+        chunks = self.chunker.split(text)
+        for chunk in chunks:
+            answer, _ = self.answerer.answer(question, chunk)
+            if answer:
+                yield answer
