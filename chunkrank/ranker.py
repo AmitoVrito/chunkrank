@@ -25,6 +25,7 @@ class Ranker:
         self._backend = None  # lazy-init EmbeddingBackend when method="embedding"
         self._cross_encoder = None  # lazy-init CrossEncoder when method="cross-encoder"
         self._cross_encoder_model = cross_encoder_model
+        self._tfidf_vectorizer = TfidfVectorizer(stop_words="english")
 
     def rank(self, question: str, answers: List[str]) -> List[Tuple[str, float]]:
         clean = [a for a in answers if isinstance(a, str) and a.strip()]
@@ -69,9 +70,8 @@ class Ranker:
         return self.rank(query, texts)
 
     def _rank_tfidf(self, question: str, answers: List[str]) -> List[Tuple[str, float]]:
-        vectorizer = TfidfVectorizer(stop_words="english")
         corpus = [question] + answers
-        vectors = vectorizer.fit_transform(corpus)
+        vectors = self._tfidf_vectorizer.fit_transform(corpus)
         q_vec = vectors[0]
         a_vecs = vectors[1:]
         scores = cosine_similarity(q_vec, a_vecs)[0]

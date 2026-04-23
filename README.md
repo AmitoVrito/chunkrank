@@ -9,7 +9,7 @@
   <a href="https://pypi.org/project/chunkrank/"><img src="https://img.shields.io/pypi/dm/chunkrank?color=green&label=downloads" alt="PyPI downloads"></a>
   <a href="https://pypi.org/project/chunkrank/"><img src="https://img.shields.io/pypi/pyversions/chunkrank?label=python" alt="Python versions"></a>
   <a href="https://github.com/AmitoVrito/chunkrank/blob/main/LICENCE"><img src="https://img.shields.io/badge/license-Apache%202.0-orange" alt="License"></a>
-  <a href="https://github.com/AmitoVrito/chunkrank/blob/main/CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.1.3-blue" alt="Changelog"></a>
+  <a href="https://github.com/AmitoVrito/chunkrank/blob/main/CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.2.0-blue" alt="Changelog"></a>
   <a href="https://github.com/AmitoVrito/chunkrank/actions"><img src="https://img.shields.io/badge/tests-116%20passing-brightgreen" alt="Tests"></a>
 </p>
 
@@ -222,20 +222,193 @@ chunkrank.register_model("my-custom-model", max_context=200_000)
 
 ---
 
+## More Examples
+
+### Read from a file
+
+```python
+import chunkrank
+
+with open("report.txt") as f:
+    text = f.read()
+
+chunks = chunkrank.split(text, model="gpt-4o-mini")
+answers = chunkrank.answer("What are the key findings?", chunks)
+print(chunkrank.rank(answers))
+```
+
+### Batch processing multiple documents
+
+```python
+import chunkrank
+
+files = ["doc1.txt", "doc2.txt", "doc3.txt"]
+question = "What is the main conclusion?"
+
+for path in files:
+    text = open(path).read()
+    chunks = chunkrank.split(text, model="gpt-4o-mini")
+    answers = chunkrank.answer(question, chunks)
+    print(f"{path}: {chunkrank.rank(answers)}")
+```
+
+### Custom chunker config
+
+```python
+from chunkrank import Chunker, ChunkerConfig
+
+config = ChunkerConfig(
+    model="claude-sonnet-4-6",
+    strategy="tokens",
+    overlap_tokens=128,
+    reserve_tokens=1024,
+)
+chunker = Chunker(config)
+chunks = chunker.split(text)
+print(f"{len(chunks)} chunks created")
+```
+
+### Semantic chunking with similarity threshold
+
+```python
+# pip install chunkrank[semantic]
+chunks = chunkrank.split(
+    text,
+    model="gpt-4o-mini",
+    strategy="semantic",
+    similarity_threshold=0.6,  # higher = fewer, larger chunks
+)
+```
+
+### Compare all ranking methods
+
+```python
+from chunkrank import Ranker
+
+question = "What is the capital of France?"
+answers = ["Paris is the capital.", "France is in Europe.", "The city of Paris."]
+
+for method in ["bm25", "tfidf", "embedding", "cross-encoder"]:
+    ranker = Ranker(method=method)
+    best = ranker.rank(question, answers)
+    print(f"{method}: {best}")
+```
+
+### Async batch with asyncio.gather
+
+```python
+import asyncio
+from chunkrank import AsyncChunkRankPipeline
+
+async def process_all(docs, question):
+    pipe = AsyncChunkRankPipeline(
+        model="gpt-4o-mini", provider="openai", api_key="sk-..."
+    )
+    tasks = [pipe.process(question, doc) for doc in docs]
+    return await asyncio.gather(*tasks)
+
+results = asyncio.run(process_all(docs, "What is the summary?"))
+```
+
+### FastAPI streaming endpoint
+
+```python
+from fastapi import FastAPI
+from fastapi.responses import StreamingResponse
+from chunkrank import ChunkRankPipeline
+
+app = FastAPI()
+pipe = ChunkRankPipeline(model="gpt-4o-mini", provider="openai", api_key="sk-...")
+
+@app.post("/ask")
+def ask(question: str, text: str):
+    return StreamingResponse(
+        pipe.stream(question=question, text=text),
+        media_type="text/plain",
+    )
+```
+
+### Inspect a model's context info
+
+```python
+import chunkrank
+
+info = chunkrank.get_model_info("gpt-4o")
+print(info)
+# {'name': 'gpt-4o', 'max_context': 128000, 'tokenizer': 'tiktoken', ...}
+```
+
+### Top-K retrieval + cross-encoder reranking
+
+```python
+from chunkrank import ChunkRankPipeline
+
+# Rank chunks first, then answer only the top 3 — fewer LLM calls on large docs
+pipe = ChunkRankPipeline(
+    model="claude-sonnet-4-6",
+    provider="anthropic",
+    api_key="sk-ant-...",
+    retrieval_top_k=3,
+)
+answer = pipe.process("What is the conclusion?", text)
+```
+
+### Register and use a custom model
+
+```python
+import chunkrank
+
+chunkrank.register_model(
+    "my-llm-v2",
+    max_context=512_000,
+    tokenizer="tiktoken",
+    tokenizer_id="o200k_base",
+    default_reserve=1024,
+)
+
+chunks = chunkrank.split(text, model="my-llm-v2")
+print(f"Split into {len(chunks)} chunks")
+```
+
+### Disk cache with custom chunker
+
+```python
+from chunkrank import ChunkCache, Chunker, ChunkerConfig
+
+cache = ChunkCache(".chunkrank_cache")
+chunks = cache.get(text, model="gpt-4o")
+
+if chunks is None:
+    config = ChunkerConfig(model="gpt-4o", overlap_tokens=64)
+    chunks = Chunker(config).split(text)
+    cache.set(text, model="gpt-4o", chunks=chunks)
+
+answers = chunkrank.answer(question, chunks)
+print(chunkrank.rank(answers))
+```
+
+---
+
 ## Supported Models
 
-54 models in the built-in registry, including:
+90 models in the built-in registry, including:
 
 | Provider | Models |
 |---|---|
-| OpenAI | gpt-4o, gpt-4o-mini, gpt-4-turbo, gpt-4, gpt-3.5-turbo, o1, o3, o3-mini, o4-mini |
-| Anthropic | claude-3-opus/sonnet/haiku, claude-3-5-sonnet/haiku, claude-sonnet-4-6, claude-opus-4-6 |
-| Google | gemini-1.5-pro, gemini-1.5-flash, gemini-2.0-flash, gemini-2.5-pro |
-| Meta | Llama-3.1/3.2/3.3, Llama-4-Scout (10M ctx), Llama-4-Maverick |
-| Mistral | mistral-7b, mixtral-8x7b, mistral-large, codestral |
-| Cohere | command-r, command-r-plus, command-r7b |
-| DeepSeek | deepseek-v3, deepseek-r1 |
-| Qwen | qwen2.5-72b-instruct, qwen2.5-coder-32b-instruct |
+| OpenAI | gpt-4o, gpt-4o-mini, gpt-4.1, gpt-4.1-mini, gpt-4.1-nano, gpt-4-turbo, gpt-4, gpt-3.5-turbo, o1, o1-mini, o1-pro, o3, o3-mini, o4-mini |
+| Anthropic | claude-3-opus, claude-3-sonnet, claude-3-haiku, claude-3-5-sonnet, claude-3-5-haiku, claude-haiku-4-5, claude-sonnet-4-6, claude-opus-4-6 |
+| Google | gemini-1.0-pro, gemini-1.5-pro, gemini-1.5-flash, gemini-2.0-flash, gemini-2.0-flash-lite, gemini-2.5-pro, gemini-2.5-flash |
+| Meta | Llama-3.1-8B/70B/405B, Llama-3.2-1B/3B/11B/90B, Llama-3.3-70B, Llama-4-Scout (10M ctx), Llama-4-Maverick |
+| Mistral | mistral-7b, mistral-small, mistral-nemo, mistral-large, mixtral-8x7b, mixtral-8x22b, codestral, pixtral-large |
+| Microsoft | phi-3-mini, phi-3-medium, phi-4, phi-4-mini |
+| xAI | grok-2, grok-3 |
+| Cohere | command-r, command-r-plus, command-r7b, command-a |
+| DeepSeek | deepseek-v2, deepseek-v3, deepseek-r1, deepseek-r1-distill-qwen-32b |
+| Qwen | qwen3-72b, qwen2.5-7b/14b/32b/72b-instruct, qwen2.5-coder-32b-instruct |
+| IBM | granite-3.3-2b-instruct, granite-3.3-8b-instruct |
+| EleutherAI | gpt-neo-2.7B, gpt-j-6B |
+| Falcon | falcon-40b, falcon-180b |
+| HuggingFace | BERT, DistilBERT, DeBERTa-v3, BigBird, Longformer, T5, FLAN-T5 |
 
 Unknown models fall back to 128k context with tiktoken (`o200k_base`).
 
@@ -268,6 +441,6 @@ Apache 2.0 — see [LICENCE](LICENCE).
 
 ## Community
 
-- [Contributors](CONTRIBUTORS.md)
-- [Changelog](CHANGELOG.md)
+- [Contributors](https://github.com/AmitoVrito/chunkrank/blob/main/CONTRIBUTORS.md)
+- [Changelog](https://github.com/AmitoVrito/chunkrank/blob/main/CHANGELOG.md)
 - Issues: https://github.com/AmitoVrito/chunkrank/issues

@@ -1,6 +1,7 @@
 import importlib.resources
 import json
 from dataclasses import dataclass
+from functools import lru_cache
 from typing import Dict, Optional
 
 
@@ -41,8 +42,9 @@ def register_model(
     )
 
 
+@lru_cache(maxsize=1)
 def load_registry() -> Dict[str, ModelInfo]:
-    "Loads the model registry from the json file"
+    "Loads the model registry from the json file (cached after first call)."
     text = importlib.resources.files("chunkrank.registry").joinpath("model_registry.json").read_text(encoding="utf-8")
     data = json.loads(text)
     return {k: ModelInfo(**v) for k, v in data.items()}

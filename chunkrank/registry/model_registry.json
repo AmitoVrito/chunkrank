@@ -69,6 +69,34 @@
     "tokenizer_id": "o200k_base",
     "default_reserve": 1024
   },
+  "o1-pro": {
+    "name": "o1-pro",
+    "max_context": 200000,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 1024
+  },
+  "gpt-4.1": {
+    "name": "gpt-4.1",
+    "max_context": 1047576,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 1024
+  },
+  "gpt-4.1-mini": {
+    "name": "gpt-4.1-mini",
+    "max_context": 1047576,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 512
+  },
+  "gpt-4.1-nano": {
+    "name": "gpt-4.1-nano",
+    "max_context": 1047576,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 256
+  },
   "claude-3-opus-20240229": {
     "name": "claude-3-opus-20240229",
     "max_context": 200000,
@@ -132,6 +160,34 @@
     "tokenizer_id": "o200k_base",
     "default_reserve": 1024
   },
+  "claude-3-5-sonnet-20240620": {
+    "name": "claude-3-5-sonnet-20240620",
+    "max_context": 200000,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 512
+  },
+  "claude-3-opus": {
+    "name": "claude-3-opus",
+    "max_context": 200000,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 1024
+  },
+  "claude-3-sonnet": {
+    "name": "claude-3-sonnet",
+    "max_context": 200000,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 512
+  },
+  "claude-3-haiku": {
+    "name": "claude-3-haiku",
+    "max_context": 200000,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 512
+  },
   "gemini-1.5-pro": {
     "name": "gemini-1.5-pro",
     "max_context": 2000000,
@@ -155,10 +211,31 @@
   },
   "gemini-2.5-pro": {
     "name": "gemini-2.5-pro",
-    "max_context": 1000000,
+    "max_context": 1048576,
     "tokenizer": "tiktoken",
     "tokenizer_id": "o200k_base",
     "default_reserve": 1024
+  },
+  "gemini-2.5-flash": {
+    "name": "gemini-2.5-flash",
+    "max_context": 1048576,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 512
+  },
+  "gemini-2.0-flash-lite": {
+    "name": "gemini-2.0-flash-lite",
+    "max_context": 1048576,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 256
+  },
+  "gemini-1.0-pro": {
+    "name": "gemini-1.0-pro",
+    "max_context": 32760,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 256
   },
   "Llama-3.1-8B": {
     "name": "Llama-3.1-8B",
@@ -223,6 +300,13 @@
     "tokenizer_id": "meta-llama/Llama-4-Maverick",
     "default_reserve": 1024
   },
+  "Llama-3.1-405B": {
+    "name": "Llama-3.1-405B",
+    "max_context": 128000,
+    "tokenizer": "hf",
+    "tokenizer_id": "meta-llama/Llama-3.1-405B-Instruct",
+    "default_reserve": 1024
+  },
   "mistral-7b": {
     "name": "Mistral-7B",
     "max_context": 32768,
@@ -258,6 +342,27 @@
     "tokenizer_id": "o200k_base",
     "default_reserve": 512
   },
+  "mistral-small-latest": {
+    "name": "mistral-small-latest",
+    "max_context": 32000,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 256
+  },
+  "mixtral-8x22b": {
+    "name": "Mixtral-8x22B",
+    "max_context": 65536,
+    "tokenizer": "hf",
+    "tokenizer_id": "mistralai/Mixtral-8x22B-Instruct-v0.1",
+    "default_reserve": 1024
+  },
+  "pixtral-large-latest": {
+    "name": "pixtral-large-latest",
+    "max_context": 128000,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 512
+  },
   "command-r": {
     "name": "command-r",
     "max_context": 128000,
@@ -279,6 +384,13 @@
     "tokenizer_id": "o200k_base",
     "default_reserve": 512
   },
+  "command-a-03-2025": {
+    "name": "command-a-03-2025",
+    "max_context": 256000,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 1024
+  },
   "deepseek-v3": {
     "name": "deepseek-v3",
     "max_context": 128000,
@@ -293,6 +405,20 @@
     "tokenizer_id": "o200k_base",
     "default_reserve": 1024
   },
+  "deepseek-v2": {
+    "name": "deepseek-v2",
+    "max_context": 128000,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 512
+  },
+  "deepseek-r1-distill-qwen-32b": {
+    "name": "deepseek-r1-distill-qwen-32b",
+    "max_context": 128000,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 512
+  },
   "qwen2.5-72b-instruct": {
     "name": "qwen2.5-72b-instruct",
     "max_context": 131072,
@@ -306,6 +432,104 @@
     "tokenizer": "tiktoken",
     "tokenizer_id": "o200k_base",
     "default_reserve": 512
+  },
+  "qwen3-72b": {
+    "name": "qwen3-72b",
+    "max_context": 131072,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 1024
+  },
+  "qwen2.5-7b-instruct": {
+    "name": "qwen2.5-7b-instruct",
+    "max_context": 131072,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 256
+  },
+  "qwen2.5-14b-instruct": {
+    "name": "qwen2.5-14b-instruct",
+    "max_context": 131072,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 512
+  },
+  "qwen2.5-32b-instruct": {
+    "name": "qwen2.5-32b-instruct",
+    "max_context": 131072,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 512
+  },
+  "phi-3-mini": {
+    "name": "Phi-3-mini",
+    "max_context": 128000,
+    "tokenizer": "hf",
+    "tokenizer_id": "microsoft/Phi-3-mini-128k-instruct",
+    "default_reserve": 256
+  },
+  "phi-3-medium": {
+    "name": "Phi-3-medium",
+    "max_context": 128000,
+    "tokenizer": "hf",
+    "tokenizer_id": "microsoft/Phi-3-medium-128k-instruct",
+    "default_reserve": 512
+  },
+  "phi-4": {
+    "name": "Phi-4",
+    "max_context": 16384,
+    "tokenizer": "hf",
+    "tokenizer_id": "microsoft/phi-4",
+    "default_reserve": 256
+  },
+  "phi-4-mini": {
+    "name": "Phi-4-mini",
+    "max_context": 128000,
+    "tokenizer": "hf",
+    "tokenizer_id": "microsoft/Phi-4-mini-instruct",
+    "default_reserve": 256
+  },
+  "grok-2": {
+    "name": "grok-2",
+    "max_context": 131072,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 512
+  },
+  "grok-3": {
+    "name": "grok-3",
+    "max_context": 131072,
+    "tokenizer": "tiktoken",
+    "tokenizer_id": "o200k_base",
+    "default_reserve": 1024
+  },
+  "granite-3.3-8b-instruct": {
+    "name": "Granite-3.3-8B-Instruct",
+    "max_context": 128000,
+    "tokenizer": "hf",
+    "tokenizer_id": "ibm-granite/granite-3.3-8b-instruct",
+    "default_reserve": 512
+  },
+  "granite-3.3-2b-instruct": {
+    "name": "Granite-3.3-2B-Instruct",
+    "max_context": 128000,
+    "tokenizer": "hf",
+    "tokenizer_id": "ibm-granite/granite-3.3-2b-instruct",
+    "default_reserve": 256
+  },
+  "falcon-40b": {
+    "name": "Falcon-40B",
+    "max_context": 2048,
+    "tokenizer": "hf",
+    "tokenizer_id": "tiiuae/falcon-40b-instruct",
+    "default_reserve": 128
+  },
+  "falcon-180b": {
+    "name": "Falcon-180B",
+    "max_context": 4096,
+    "tokenizer": "hf",
+    "tokenizer_id": "tiiuae/falcon-180B-chat",
+    "default_reserve": 256
   },
   "gpt-neo-2.7B": {
     "name": "GPT-Neo-2.7B",

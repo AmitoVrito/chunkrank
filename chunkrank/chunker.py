@@ -68,17 +68,19 @@ class Chunker:
 
         while start < n:
             end = min(n, start + approx_chars)
+
+            # Binary search for the largest end that fits within the token budget
+            if self.tok.count(text[start:end]) > self.window:
+                lo, hi = start + 1, end
+                while lo < hi:
+                    mid = (lo + hi + 1) // 2
+                    if self.tok.count(text[start:mid]) <= self.window:
+                        lo = mid
+                    else:
+                        hi = mid - 1
+                end = max(start + 1, lo)  # always make progress
+
             chunk = text[start:end]
-
-            # If too big, shrink
-            while end > start and self.tok.count(chunk) > self.window:
-                end = start + max(1, (end - start) * 9 // 10)
-                chunk = text[start:end]
-
-            # If somehow cannot shrink (pathological), force a minimal progress
-            if end <= start:
-                end = min(n, start + 200)
-                chunk = text[start:end]
 
             yield chunk
 

@@ -32,6 +32,8 @@ class LLMAnswerer:
     provider: str          # "openai" or "anthropic"
     api_key: str
     model: str = ""
+    _openai_client: object = field(default=None, init=False, repr=False, compare=False)
+    _anthropic_client: object = field(default=None, init=False, repr=False, compare=False)
 
     def __post_init__(self):
         if self.provider == "openai" and not self.model:
@@ -48,12 +50,14 @@ class LLMAnswerer:
             raise ValueError(f"Unknown provider: {self.provider}. Use 'openai' or 'anthropic'.")
 
     def _openai(self, question: str, context: str) -> Tuple[str, float]:
-        try:
-            from openai import OpenAI
-        except ImportError:
-            raise ImportError("openai package not installed. Run: pip install openai")
+        if self._openai_client is None:
+            try:
+                from openai import OpenAI
+            except ImportError:
+                raise ImportError("openai package not installed. Run: pip install openai")
+            self._openai_client = OpenAI(api_key=self.api_key)
 
-        client = OpenAI(api_key=self.api_key)
+        client = self._openai_client
         response = client.chat.completions.create(
             model=self.model,
             messages=[
@@ -73,12 +77,14 @@ class LLMAnswerer:
         return (text, float(score) if score else 1.0)
 
     def _anthropic(self, question: str, context: str) -> Tuple[str, float]:
-        try:
-            import anthropic
-        except ImportError:
-            raise ImportError("anthropic package not installed. Run: pip install anthropic")
+        if self._anthropic_client is None:
+            try:
+                import anthropic
+            except ImportError:
+                raise ImportError("anthropic package not installed. Run: pip install anthropic")
+            self._anthropic_client = anthropic.Anthropic(api_key=self.api_key)
 
-        client = anthropic.Anthropic(api_key=self.api_key)
+        client = self._anthropic_client
         message = client.messages.create(
             model=self.model,
             max_tokens=512,
